@@ -1,0 +1,22 @@
+name: Firebase function Integration
+ 
+on:
+ pull_request:
+   branches: [main]
+ 
+jobs:
+ buildAndTest:
+   runs-on: ubuntu-latest
+ 
+   steps:
+     - uses: actions/checkout@v2
+ 
+     - name: Install npm packages
+       run: |
+         cd functions
+         npm install
+ 
+     - name: Run Tests
+       run: |
+         cd functions
+         npm test
