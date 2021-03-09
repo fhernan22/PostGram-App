@@ -2,23 +2,16 @@ const functions = require("firebase-functions");
 const cors = require("cors");
 const express = require("express");
 
+const { signup } = require("./handlers/users");
 
 const app = express();
 app.use(cors({ origin: true }));
 
-app.get("/helloworld", (req, res) => {
-  res.send("Hello World! May the force be with you!");
-});
+// User Routes
+app.post("/signup", signup);
 
 const api = functions.https.onRequest(app);
 
 module.exports = {
   api,
 };
-
-
-// get request
-// post request
-
-
-
