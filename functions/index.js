@@ -3,7 +3,7 @@ const cors = require("cors");
 const express = require("express");
 
 const { signup, login } = require("./handlers/users");
-const { makeOnePost } = require("./handlers/posts");
+const { makeOnePost, deletePost } = require("./handlers/posts");
 const { authMiddleware } = require("./util/authMiddleware");
 
 const app = express();
@@ -15,6 +15,7 @@ app.post("/login", login);
 
 // Posts Routes
 app.post("/post", authMiddleware, makeOnePost);
+app.delete("/delete/:postId", authMiddleware, deletePost);
 
 const api = functions.https.onRequest(app);
 
