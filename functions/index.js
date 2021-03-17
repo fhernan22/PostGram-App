@@ -3,8 +3,8 @@ const cors = require("cors");
 const express = require("express");
 
 const { signup, login } = require("./handlers/users");
-const { makeOnePost, deletePost } = require("./handlers/posts");
-const { authMiddleware } = require("./util/authMiddleware");
+const { makeOnePost, deletePost, updatePost } = require("./handlers/posts");
+// const { authMiddleware } = require("./util/authMiddleware");
 
 const app = express();
 app.use(cors({ origin: true }));
@@ -14,8 +14,10 @@ app.post("/signup", signup);
 app.post("/login", login);
 
 // Posts Routes
-app.post("/post", authMiddleware, makeOnePost);
-app.delete("/delete/:postId", authMiddleware, deletePost);
+app.post("/post", makeOnePost);
+app.delete("/delete/:postId", deletePost);
+app.patch("/update/:postId", updatePost);
+// app.get("/posts", getAllPosts)
 
 const api = functions.https.onRequest(app);
 
