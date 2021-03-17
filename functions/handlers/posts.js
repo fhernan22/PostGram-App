@@ -51,3 +51,33 @@ exports.deletePost = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+exports.updatePost = (req, res) => {
+  const document = db.doc(`/posts/${req.params.postId}`);
+
+  document
+    .update({ body: req.body.body })
+    .then(() => {
+      return res.json({ message: "Post updated successfully" });
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
+
+//=========================Ginel=========================//
+
+// exports.getAllPosts = (req, res) => {
+// Run a query that gets all documents in the posts collection
+// ordered by createdAt in descending order
+// loop through each document that the query returns
+// push content of the document to
+//  variable (body, userHandle, createdAt, commentCount, likeCount, userImage, and screamId)
+// return json object in the response with the variable containing
+// all documents
+// if there's an error return a status code of 500 and a
+// the following json { error: err.code }
+// };
+
+//=======================================================//
