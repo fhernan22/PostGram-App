@@ -81,3 +81,24 @@ exports.updatePost = (req, res) => {
 // };
 
 //=======================================================//
+
+
+exports.getAllPosts = (req, res) => {
+  db.collection("posts")
+  .orderBy("createdAt", "desc")
+  .get()
+  .then(querySnapshot => {
+    let info = querySnapshot.docs.map(doc => {
+      return { id: doc.id, ...doc.data() }
+    })
+    res.json(info);
+    })
+    
+  .catch((err) => {
+    console.error(err);
+    return res.status(500).json({ error: err.code });
+  });
+
+};
+
+
