@@ -3,7 +3,7 @@ const cors = require("cors");
 const express = require("express");
 
 const { signup, login } = require("./handlers/users");
-const { makeOnePost, deletePost, updatePost } = require("./handlers/posts");
+const { makeOnePost, deletePost, updatePost, getAllPosts } = require("./handlers/posts");
 // const { authMiddleware } = require("./util/authMiddleware");
 
 const app = express();
@@ -17,7 +17,7 @@ app.post("/login", login);
 app.post("/post", makeOnePost);
 app.delete("/delete/:postId", deletePost);
 app.patch("/update/:postId", updatePost);
-// app.get("/posts", getAllPosts)
+app.get("/posts", getAllPosts)
 
 const api = functions.https.onRequest(app);
 
