@@ -17,7 +17,7 @@ app.use(cors({ origin: true }));
 // User Routes
 app.post("/signup", signup);
 app.post("/login", login);
-app.get("/posts/:handle", getUserDetails);
+app.get("/user/:handle", getUserDetails);
 
 // Posts Routes
 app.post("/post", authMiddleware, makeOnePost);
