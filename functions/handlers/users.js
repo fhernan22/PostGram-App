@@ -127,7 +127,7 @@ exports.getUserDetails = (req, res) => {
           likeCount: doc.data().likeCount,
           dislikeCount: doc.data().dislikeCount,
           commentCount: doc.data().commentCount,
-          screamId: doc.id,
+          postId: doc.id,
         });
       });
 
