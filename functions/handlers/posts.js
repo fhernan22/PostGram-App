@@ -7,6 +7,7 @@ exports.makeOnePost = (req, res) => {
 
   const newPost = {
     body: req.body.body,
+    fullName: req.user.fullName,
     userHandle: req.user.handle,
     createdAt: new Date().toISOString(),
     userImage: req.user.imageUrl,
