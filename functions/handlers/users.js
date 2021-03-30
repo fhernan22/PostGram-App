@@ -2,7 +2,10 @@ const { admin, db } = require("../util/admin");
 const firebase = require("firebase");
 const config = require("../util/config");
 
-const { validateSignUpData, validateLoginData } = require("../util/validators");
+const { validateSignUpData, validateLoginData, formatProfileDetails } = require("../util/validators");
+const { user } = require("firebase-functions/lib/providers/auth");
+const { analytics } = require("firebase-functions");
+const { ResultStorage } = require("firebase-functions/lib/providers/testLab");
 
 firebase.initializeApp(config);
 
@@ -114,7 +117,7 @@ exports.getUserDetails = (req, res) => {
           .orderBy("createdAt", "desc")
           .get();
       } else {
-        return res.status(404).json({ errror: "User not found" });
+        return res.status(404).json({ error: "User not found" });
       }
     })
     .then((data) => {
@@ -140,3 +143,22 @@ exports.getUserDetails = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+exports.addUserDetails = (req, res) => {
+  let userDetails = formatProfileDetails(req.body);
+  db.doc(`/users/${req.user.handle}`)
+  .update(userDetails)
+  .then(() => {
+    return res
+      .status(200)
+      .json({ message:"Details added successfully"});
+  })
+  
+  .catch((err) => {
+    console.error(err);
+  
+    return res
+      .status(500)
+      .json({ general: "Something went wrong"});
+  });
+}
