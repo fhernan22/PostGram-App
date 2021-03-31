@@ -2,8 +2,13 @@ const functions = require("firebase-functions");
 const cors = require("cors");
 const express = require("express");
 
-
-const { signup, login, getUserDetails, getAuthenticatedUser, addUserDetails } = require("./handlers/users");
+const {
+  signup,
+  login,
+  getUserDetails,
+  getAuthenticatedUser,
+  addUserDetails,
+} = require("./handlers/users");
 
 const {
   makeOnePost,
@@ -12,6 +17,7 @@ const {
   getAllPosts,
   likePost,
   dislikePost,
+  commentOnPost,
 } = require("./handlers/posts");
 const { authMiddleware } = require("./util/authMiddleware");
 
@@ -32,6 +38,7 @@ app.patch("/update/:postId", authMiddleware, updatePost);
 app.get("/posts", getAllPosts);
 app.post("/post/:postId/like", authMiddleware, likePost);
 app.post("/post/:postId/dislike", authMiddleware, dislikePost);
+app.post("/post/:postId/comment", authMiddleware, commentOnPost);
 
 const api = functions.https.onRequest(app);
 
